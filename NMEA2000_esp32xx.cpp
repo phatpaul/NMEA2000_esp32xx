@@ -195,7 +195,7 @@ bool tNMEA2000_esp32xx::CANGetFrame(unsigned long &id, unsigned char &len, unsig
     logDebug(LOG_MSG, "twai rcv id=%d,len=%d, ext=%d", LOGID(message.identifier), message.data_length_code, message.extd);
     if (!message.rtr)
     {
-        memcpy(buf, message.data, message.data_length_code);
+        memcpy(buf, message.data, len);
     }
     return true;
 }
@@ -252,7 +252,7 @@ void tNMEA2000_esp32xx::InitCANFrameBuffers()
         /* triple_sampling
         * true: the bus is sampled three times; recommended for low/medium speed buses (class A and B) where filtering spikes on the bus line is beneficial
         * false: the bus is sampled once; recommended for high speed buses (SAE class C)*/
-        t_config.triple_sampling=true; 
+        t_config.triple_sampling=true;
 
         // Filter config
         twai_filter_config_t f_config = TWAI_FILTER_CONFIG_ACCEPT_ALL();
